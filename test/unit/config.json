@@ -1,0 +1,109 @@
+{
+    "config": [
+        {
+            "action": null
+        },
+        {
+            "accessKeyID": "accessKeyID"
+        },
+        {
+            "accountName": "testaccountName"
+        },
+        {
+            "replyToAddress": "testReplyToAddress"
+        },
+        {
+            "action": "single",
+            "accessKeyID": "feafwgeg4532f"
+        },
+        {
+            "action": "single",
+            "accessKeyID": "feafwgeg4532f",
+            "accessKeySecret": "fjoaewngoiej2145t"
+        },
+        {
+            "action": "single",
+            "accessKeyID": "feafwgeg4532f",
+            "accessKeySecret": "fjoaewngoiej2145t",
+            "accountName": "test"
+        },
+        {
+            "action": "single",
+            "accessKeyID": "feafwgeg4532f",
+            "accessKeySecret": "fjoaewngoiej2145t",
+            "accountName": "test",
+            "toAddress":"http://baidu.com"
+        },
+        {
+            "action": "single",
+            "accessKeyID": "feafwgeg4532f",
+            "accessKeySecret": "fjoaewngoiej2145t",
+            "accountName": "test",
+            "toAddress":"http://baidu.com",
+            "replyToAddress": "testReplyToAddress"
+        },
+        {
+            "action": "single",
+            "accessKeyID": "feafwgeg4532f",
+            "accessKeySecret": "fjoaewngoiej2145t",
+            "accountName": "test",
+            "toAddress":"http://baidu.com",
+            "replyToAddress": "testReplyToAddress",
+            "addressType": "testaddressType",
+            "templateCode": "templateCode"
+        },
+        {
+            "action": "batch"
+        },
+        {
+            "action": "batch",
+            "accessKeyID": "feafwgeg4532f"
+        },
+        {
+            "action": "batch",
+            "accessKeyID": "feafwgeg4532f",
+            "accessKeySecret": "fjoaewngoiej2145t"
+        },
+        {
+            "action": "batch",
+            "accessKeyID": "feafwgeg4532f",
+            "accessKeySecret": "fjoaewngoiej2145t",
+            "accountName": "test"
+        },
+        {
+            "action": "batch",
+            "accessKeyID": "feafwgeg4532f",
+            "accessKeySecret": "fjoaewngoiej2145t",
+            "accountName": "test",
+            "templateName": "testTemplateName"
+        },
+        {
+            "action": "batch",
+            "accessKeyID": "feafwgeg4532f",
+            "accessKeySecret": "fjoaewngoiej2145t",
+            "accountName": "test",
+            "templateName": "testTemplateName",
+            "receiversName": "testReceiversName"
+        },
+        {
+            "action": "batch",
+            "accessKeyID": "feafwgeg4532f",
+            "accessKeySecret": "fjoaewngoiej2145t",
+            "accountName": "test",
+            "templateName": "testTemplateName",
+            "receiversName": "testReceiversName",
+            "replyToAddress": "replyToAddress"
+        },
+        {
+            "action": "batch",
+            "accessKeyID": "feafwgeg4532f",
+            "accessKeySecret": "fjoaewngoiej2145t",
+            "accountName": "test",
+            "templateName": "testTemplateName",
+            "receiversName": "testReceiversName",
+            "replyToAddress": "replyToAddress",
+            "addressType": "testaddressType",
+            "templateCode": "templateCode"
+        }
+    ]
+}
