@@ -62,7 +62,7 @@ module.exports = function (config = {}, cb) {
         Format: "JSON",
         AccountName: config.accountName,
         ReplyToAddress: !!config.replyToAddress,
-        AddressType: typeof config.addressType == "undefined" ? 0 : config.addressType,
+        AddressType: typeof config.addressType === "undefined" ? 0 : config.addressType,
         SignatureMethod: "HMAC-SHA1",
         SignatureNonce: nonce,
         SignatureVersion: "1.0",
@@ -114,5 +114,5 @@ module.exports = function (config = {}, cb) {
         cb("success", res);
     }).catch((err) => {
         cb(err, {"isErr": false});
-    })
-}
+    });
+};

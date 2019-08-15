@@ -20,7 +20,7 @@ module.exports = function (config, cb) {
     var param = {
 
     };
-    if (config.action == "single") {
+    if (config.action === "single") {
         if (!config.toAddress) {
             errorMsg.push("toAddress required");
         }
@@ -86,7 +86,7 @@ module.exports = function (config, cb) {
         return cb(errorMsg.join(","));
     }
     var signStr = [];
-    for (var i in param) {
+    for (let i in param) {
         signStr.push(encodeURIComponent(i) + "=" + encodeURIComponent(param[i]));
     }
     signStr.sort()
@@ -97,7 +97,7 @@ module.exports = function (config, cb) {
         .digest("base64");
     const signature = encodeURIComponent(sign);
     var reqBody = ["Signature=" + signature];
-    for (var i in param) {
+    for (let i in param) {
         reqBody.push(i + "=" + param[i]);
     }
     reqBody = reqBody.join("&");
@@ -110,5 +110,5 @@ module.exports = function (config, cb) {
         method: "POST"
     }, function (err, res, body) {
         cb(err, body);
-    })
+    });
 };

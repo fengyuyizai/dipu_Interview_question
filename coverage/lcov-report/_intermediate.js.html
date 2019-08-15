@@ -280,20 +280,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const crypto = require("crypto")
-const axios = require("axios")
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const crypto = require("crypto");
+const axios = require("axios");
 &nbsp;
-const url = 'http://127.0.0.1:3000/api/test';
+const url = "http://127.0.0.1:3000/api/test";
 &nbsp;
 const configRequired = {
-    'common': ['accessKeyID', 'accessKeySecret', 'accountName'],
-    'single': ['toAddress'],
-    'batch': ['templateName', 'receiversName']
-}
+    "common": ["accessKeyID", "accessKeySecret", "accountName"],
+    "single": ["toAddress"],
+    "batch": ["templateName", "receiversName"]
+};
 const paddingField = {
-    'single': ['fromAlias', 'subject', 'htmlBody', 'textBody'],
-    'batch': ['tagName']
-}
+    "single": ["fromAlias", "subject", "htmlBody", "textBody"],
+    "batch": ["tagName"]
+};
 &nbsp;
 /**
  * 将config中存在的字段加入param
@@ -306,7 +306,7 @@ function paddingFieldFun (totalParam, config, paddingList) {
         <span class="missing-if-branch" title="if path not taken" >I</span>if (config.item) {
 <span class="cstat-no" title="statement not covered" >            totalParam[item] = config[item];</span>
         }
-    })
+    });
 }
 &nbsp;
 /**
@@ -320,45 +320,45 @@ function configRequiredFun (totalErrorMsg, config, requiredList) {
         if (!config[item]) {
             totalErrorMsg.push(`${item} required`);
         }
-    })
+    });
 }
 &nbsp;
 module.exports = function (config = <span class="branch-0 cbranch-no" title="branch not covered" >{},</span> cb) {
     const nonce = Date.now();
     const date = new Date();
     const errorMsg = [];
-    const action = config.action
+    const action = config.action;
     
     // 如果缺少action， 直接回退
     if (!action) {
-        cb('error action', null);
+        cb("error action", null);
         return
     }
 &nbsp;
-    configRequiredFun(errorMsg, config, configRequired.common)
+    configRequiredFun(errorMsg, config, configRequired.common);
     
     // 定义基础结构
     let param = {
         AccessKeyId: config.accessKeyID,
         Action: config.action,
-        Format: 'JSON',
+        Format: "JSON",
         AccountName: config.accountName,
         ReplyToAddress: !!config.replyToAddress,
-        AddressType: typeof config.addressType == 'undefined' ? 0 : <span class="branch-1 cbranch-no" title="branch not covered" >config.addressType,</span>
-        SignatureMethod: 'HMAC-SHA1',
+        AddressType: typeof config.addressType === "undefined" ? 0 : <span class="branch-1 cbranch-no" title="branch not covered" >config.addressType,</span>
+        SignatureMethod: "HMAC-SHA1",
         SignatureNonce: nonce,
-        SignatureVersion: '1.0',
+        SignatureVersion: "1.0",
         TemplateCode: config.templateCode,
         Timestamp: date.toISOString(),
-        Version: '2015-11-23'
+        Version: "2015-11-23"
     }
 &nbsp;
     configRequiredFun(errorMsg, config, configRequired[action]);
-    if (action === 'single') {
+    if (action === "single") {
         Object.assign(param, {
             ToAddress: config.toAddress,
         })
-    } else <span class="missing-if-branch" title="else path not taken" >E</span>if (config.action === 'batch') {
+    } else <span class="missing-if-branch" title="else path not taken" >E</span>if (config.action === "batch") {
         Object.assign(param, {
             TemplateName: config.templateName,
             ReceiversName: config.receiversName,
@@ -366,44 +366,44 @@ module.exports = function (config = <span class="branch-0 cbranch-no" title="bra
     }
     paddingFieldFun(param, config, paddingField[action]);
     if (errorMsg.length) {
-        return cb(errorMsg.join(','));
+        return cb(errorMsg.join(","));
     }
 &nbsp;
     // 签名生成
     let signArr = [];
     for (let i in param) {
-        signArr.push(i + '=' + param[i]);
+        signArr.push(i + "=" + param[i]);
     }
     signArr.sort()
-    let signStr = signArr.join('&amp;')
-    signStr = 'POST&amp;%2F&amp;' + signStr;
-    const sign = crypto.createHmac("sha1", config.accessKeySecret + '&amp;')
+    let signStr = signArr.join("&amp;")
+    signStr = "POST&amp;%2F&amp;" + signStr;
+    const sign = crypto.createHmac("sha1", config.accessKeySecret + "&amp;")
         .update(signStr)
-        .digest('base64');
+        .digest("base64");
     const signature = encodeURIComponent(sign);
-    let reqBody = ['Signature=' + signature];
-    reqBody.concat(signArr)
-    reqBody = reqBody.join('&amp;');
+    let reqBody = ["Signature=" + signature];
+    reqBody.concat(signArr);
+    reqBody = reqBody.join("&amp;");
 &nbsp;
     axios({
-        method: 'POST',
+        method: "POST",
         url: url,
         data: reqBody,
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            "Content-Type": "application/x-www-form-urlencoded"
         }
     }).then(<span class="fstat-no" title="function not covered" >(r</span>es) =&gt; {
-<span class="cstat-no" title="statement not covered" >        cb('success', res)</span>
+<span class="cstat-no" title="statement not covered" >        cb("success", res);</span>
     }).catch((err) =&gt; {
-        cb(err, {'isErr': false})
-    })
-}</pre></td></tr>
+        cb(err, {"isErr": false});
+    });
+};</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Aug 15 2019 17:45:28 GMT+0800 (GMT+08:00)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Aug 15 2019 18:23:12 GMT+0800 (GMT+08:00)
 </div>
 </div>
 <script src="prettify.js"></script>
