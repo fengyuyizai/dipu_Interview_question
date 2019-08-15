@@ -22,7 +22,7 @@ const paddingField = {
 function paddingFieldFun (totalParam, config, paddingList) {
     paddingList.forEach((item) => {
         if (config.item) {
-            let key = item.toString()
+            let key = item.toString();
             totalParam[key] = config[key];
         }
     });
@@ -36,7 +36,7 @@ function paddingFieldFun (totalParam, config, paddingList) {
  */
 function configRequiredFun (totalErrorMsg, config, requiredList) {
     requiredList.forEach((item) => {
-        let key = item.toString()
+        let key = item.toString();
         if (!config[key]) {
             totalErrorMsg.push(`${item} required`);
         }
@@ -52,7 +52,7 @@ module.exports = function (config = {}, cb) {
     // 如果缺少action， 直接回退
     if (!action) {
         cb("error action", null);
-        return
+        return;
     }
 
     configRequiredFun(errorMsg, config, configRequired.common);
@@ -77,7 +77,7 @@ module.exports = function (config = {}, cb) {
     if (action === "single") {
         Object.assign(param, {
             ToAddress: config.toAddress,
-        })
+        });
     } else if (config.action === "batch") {
         Object.assign(param, {
             TemplateName: config.templateName,
@@ -91,8 +91,9 @@ module.exports = function (config = {}, cb) {
 
     // 签名生成
     let signArr = [];
-    if (param) {
-        for (let i in param) {
+
+    for (let i in param) {
+        if ({}.hasOwnProperty.call(param, i)) {
             signArr.push(i + "=" + param[i]);
         }
     }

@@ -86,8 +86,8 @@ module.exports = function (config, cb) {
         return cb(errorMsg.join(","));
     }
     var signStr = [];
-    if (param) {
-        for (let i in param) {
+    for (let i in param) {
+        if ({}.hasOwnProperty.call(param, i)) {
             signStr.push(encodeURIComponent(i) + "=" + encodeURIComponent(param[i]));
         }
     }

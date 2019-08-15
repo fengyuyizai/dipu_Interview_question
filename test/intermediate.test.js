@@ -1,5 +1,5 @@
 const intermediate = require("../static/_intermediate");
-const LocalData = require("./unit/config.json")
+const LocalData = require("./unit/config.json");
 
 describe("action is null situation", () => {
   for (let i = 0; i < 4; i++) {
@@ -17,7 +17,7 @@ describe("action is null situation", () => {
 describe("action is single situation, config[4 - 9]", () => {
   test(`test config[4], lack accessKeySecret,accountName,toAddress`, (done) => {
     function callback(err) {
-      expect(err).toBe("accessKeySecret required,accountName required,toAddress required")
+      expect(err).toBe("accessKeySecret required,accountName required,toAddress required");
       done();
     }
     intermediate(LocalData.config[4], callback);
@@ -27,14 +27,14 @@ describe("action is single situation, config[4 - 9]", () => {
       expect(err).toBe("accountName required,toAddress required");
       done();
     }
-    intermediate(LocalData.config[5], callback)
+    intermediate(LocalData.config[5], callback);
   });
   test(`test config[6], lack toAddress`, (done) => {
     function callback(err) {
       expect(err).toBe("toAddress required");
       done();
     }
-    intermediate(LocalData.config[6], callback)
+    intermediate(LocalData.config[6], callback);
   });
   test(`test config[7], The request is illegal, param err`, (done) => {
     function callback(err, res) {
@@ -73,7 +73,7 @@ describe("action is batch situation, config[10 - end]", () => {
       done();
     }
     intermediate(LocalData.config[13], callback);
-  })
+  });
   test(`test config[14], lack receiversName`, (done) => {
     function callback(err, res) {
       expect(err).toBe("receiversName required");
