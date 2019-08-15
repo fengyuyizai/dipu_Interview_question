@@ -22,7 +22,8 @@ const paddingField = {
 function paddingFieldFun (totalParam, config, paddingList) {
     paddingList.forEach((item) => {
         if (config.item) {
-            totalParam[item] = config[item];
+            let key = item.toString()
+            totalParam[key] = config[key];
         }
     });
 }
@@ -35,7 +36,8 @@ function paddingFieldFun (totalParam, config, paddingList) {
  */
 function configRequiredFun (totalErrorMsg, config, requiredList) {
     requiredList.forEach((item) => {
-        if (!config[item]) {
+        let key = item.toString()
+        if (!config[key]) {
             totalErrorMsg.push(`${item} required`);
         }
     });
@@ -69,7 +71,7 @@ module.exports = function (config = {}, cb) {
         TemplateCode: config.templateCode,
         Timestamp: date.toISOString(),
         Version: "2015-11-23"
-    }
+    };
 
     configRequiredFun(errorMsg, config, configRequired[action]);
     if (action === "single") {
@@ -80,7 +82,7 @@ module.exports = function (config = {}, cb) {
         Object.assign(param, {
             TemplateName: config.templateName,
             ReceiversName: config.receiversName,
-        })
+        });
     }
     paddingFieldFun(param, config, paddingField[action]);
     if (errorMsg.length) {
@@ -89,11 +91,13 @@ module.exports = function (config = {}, cb) {
 
     // 签名生成
     let signArr = [];
-    for (let i in param) {
-        signArr.push(i + "=" + param[i]);
+    if (param) {
+        for (let i in param) {
+            signArr.push(i + "=" + param[i]);
+        }
     }
-    signArr.sort()
-    let signStr = signArr.join("&")
+    signArr.sort();
+    let signStr = signArr.join("&");
     signStr = "POST&%2F&" + signStr;
     const sign = crypto.createHmac("sha1", config.accessKeySecret + "&")
         .update(signStr)
@@ -105,7 +109,7 @@ module.exports = function (config = {}, cb) {
 
     axios({
         method: "POST",
-        url: url,
+        url,
         data: reqBody,
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"

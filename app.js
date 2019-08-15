@@ -8,7 +8,7 @@ const app = express();
 const { HOST = "https://dm.aliyuncs.com/", PORT = "80" } = process.env;
 
 // 超时时间
-const TIME_OUT = 30 * 1e3;
+const TIME_OUT = 30000;
 
 // 设置端口
 app.set("port", 3000);

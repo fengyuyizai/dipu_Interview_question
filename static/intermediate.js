@@ -51,7 +51,7 @@ module.exports = function (config, cb) {
         if (config.textBody) {
             param.TextBody = config.textBody;
         }
-    } else if (config.action == "batch") {
+    } else if (config.action === "batch") {
         if (!config.templateName) {
             errorMsg.push("templateName required");
         }
@@ -86,10 +86,12 @@ module.exports = function (config, cb) {
         return cb(errorMsg.join(","));
     }
     var signStr = [];
-    for (let i in param) {
-        signStr.push(encodeURIComponent(i) + "=" + encodeURIComponent(param[i]));
+    if (param) {
+        for (let i in param) {
+            signStr.push(encodeURIComponent(i) + "=" + encodeURIComponent(param[i]));
+        }
     }
-    signStr.sort()
+    signStr.sort();
     signStr = signStr.join("&");
     signStr = "POST&%2F&" + encodeURIComponent(signStr);
     const sign = crypto.createHmac("sha1", config.accessKeySecret + "&")
