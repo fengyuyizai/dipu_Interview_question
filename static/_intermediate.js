@@ -1,17 +1,17 @@
-const crypto = require("crypto")
-const axios = require("axios")
+const crypto = require("crypto");
+const axios = require("axios");
 
-const url = 'http://127.0.0.1:3000/api/test';
+const url = "http://127.0.0.1:3000/api/test";
 
 const configRequired = {
-    'common': ['accessKeyID', 'accessKeySecret', 'accountName'],
-    'single': ['toAddress'],
-    'batch': ['templateName', 'receiversName']
-}
+    "common": ["accessKeyID", "accessKeySecret", "accountName"],
+    "single": ["toAddress"],
+    "batch": ["templateName", "receiversName"]
+};
 const paddingField = {
-    'single': ['fromAlias', 'subject', 'htmlBody', 'textBody'],
-    'batch': ['tagName']
-}
+    "single": ["fromAlias", "subject", "htmlBody", "textBody"],
+    "batch": ["tagName"]
+};
 
 /**
  * 将config中存在的字段加入param
@@ -24,7 +24,7 @@ function paddingFieldFun (totalParam, config, paddingList) {
         if (config.item) {
             totalParam[item] = config[item];
         }
-    })
+    });
 }
 
 /**
@@ -38,45 +38,45 @@ function configRequiredFun (totalErrorMsg, config, requiredList) {
         if (!config[item]) {
             totalErrorMsg.push(`${item} required`);
         }
-    })
+    });
 }
 
 module.exports = function (config = {}, cb) {
     const nonce = Date.now();
     const date = new Date();
     const errorMsg = [];
-    const action = config.action
+    const action = config.action;
     
     // 如果缺少action， 直接回退
     if (!action) {
-        cb('error action', null);
+        cb("error action", null);
         return
     }
 
-    configRequiredFun(errorMsg, config, configRequired.common)
+    configRequiredFun(errorMsg, config, configRequired.common);
     
     // 定义基础结构
     let param = {
         AccessKeyId: config.accessKeyID,
         Action: config.action,
-        Format: 'JSON',
+        Format: "JSON",
         AccountName: config.accountName,
         ReplyToAddress: !!config.replyToAddress,
-        AddressType: typeof config.addressType == 'undefined' ? 0 : config.addressType,
-        SignatureMethod: 'HMAC-SHA1',
+        AddressType: typeof config.addressType == "undefined" ? 0 : config.addressType,
+        SignatureMethod: "HMAC-SHA1",
         SignatureNonce: nonce,
-        SignatureVersion: '1.0',
+        SignatureVersion: "1.0",
         TemplateCode: config.templateCode,
         Timestamp: date.toISOString(),
-        Version: '2015-11-23'
+        Version: "2015-11-23"
     }
 
     configRequiredFun(errorMsg, config, configRequired[action]);
-    if (action === 'single') {
+    if (action === "single") {
         Object.assign(param, {
             ToAddress: config.toAddress,
         })
-    } else if (config.action === 'batch') {
+    } else if (config.action === "batch") {
         Object.assign(param, {
             TemplateName: config.templateName,
             ReceiversName: config.receiversName,
@@ -84,35 +84,35 @@ module.exports = function (config = {}, cb) {
     }
     paddingFieldFun(param, config, paddingField[action]);
     if (errorMsg.length) {
-        return cb(errorMsg.join(','));
+        return cb(errorMsg.join(","));
     }
 
     // 签名生成
     let signArr = [];
     for (let i in param) {
-        signArr.push(i + '=' + param[i]);
+        signArr.push(i + "=" + param[i]);
     }
     signArr.sort()
-    let signStr = signArr.join('&')
-    signStr = 'POST&%2F&' + signStr;
-    const sign = crypto.createHmac("sha1", config.accessKeySecret + '&')
+    let signStr = signArr.join("&")
+    signStr = "POST&%2F&" + signStr;
+    const sign = crypto.createHmac("sha1", config.accessKeySecret + "&")
         .update(signStr)
-        .digest('base64');
+        .digest("base64");
     const signature = encodeURIComponent(sign);
-    let reqBody = ['Signature=' + signature];
-    reqBody.concat(signArr)
-    reqBody = reqBody.join('&');
+    let reqBody = ["Signature=" + signature];
+    reqBody.concat(signArr);
+    reqBody = reqBody.join("&");
 
     axios({
-        method: 'POST',
+        method: "POST",
         url: url,
         data: reqBody,
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            "Content-Type": "application/x-www-form-urlencoded"
         }
     }).then((res) => {
-        cb('success', res)
+        cb("success", res);
     }).catch((err) => {
-        cb(err, {'isErr': false})
+        cb(err, {"isErr": false});
     })
 }

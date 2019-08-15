@@ -1,8 +1,8 @@
 
-const path = require('path')
+const path = require('path');
 
 module.exports = {
-    rootDir: path.resolve(__dirname, '../../'),
+    rootDir: path.resolve(__dirname, "../../"),
     moduleFileExtensions: [
       "js"
     ],
@@ -11,6 +11,6 @@ module.exports = {
     testMatch: [
       "**/?(*.)(spec|test|e2e).js?(x)"
     ],
-    coveragePathIgnorePatterns: ['/node_modules/', '/test/'],
-    testURL: 'http://localhost'
+    coveragePathIgnorePatterns: ["/node_modules/", "/test/"],
+    testURL: "http://localhost"
 }
