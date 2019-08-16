@@ -60,7 +60,7 @@ module.exports = function (config = {}, cb) {
     // 定义基础结构
     let param = {
         AccessKeyId: config.accessKeyID,
-        Action: config.action,
+        Action: action,
         Format: "JSON",
         AccountName: config.accountName,
         ReplyToAddress: !!config.replyToAddress,
@@ -78,7 +78,7 @@ module.exports = function (config = {}, cb) {
         Object.assign(param, {
             ToAddress: config.toAddress,
         });
-    } else if (config.action === "batch") {
+    } else if (action === "batch") {
         Object.assign(param, {
             TemplateName: config.templateName,
             ReceiversName: config.receiversName,
