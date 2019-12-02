@@ -26,6 +26,8 @@ function paddingFieldFun (totalParam, config, paddingList) {
             totalParam[key] = config[key];
         }
     });
+    let a = 1;
+    let b = 2;
 }
 
 /**
