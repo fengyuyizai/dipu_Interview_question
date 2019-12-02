@@ -28,6 +28,7 @@ function paddingFieldFun (totalParam, config, paddingList) {
     });
     let a = 1;
     let b = 2;
+    let m = 1;
 }
 
 /**
